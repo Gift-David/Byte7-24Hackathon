@@ -7,7 +7,7 @@ import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 
-contract myPlanaMarketplace is ERC721 {
+contract MyPlanaMarketplace is ERC721,  ERC721URIStorage {
     using Counters for Counters.Counter;
 
 	Counters.Counter public tokenIdCounter;
@@ -15,7 +15,7 @@ contract myPlanaMarketplace is ERC721 {
     constructor() ERC721("PLANA", "PLN") {}
 
     function _baseURI() internal pure override returns (string memory) {
-		return "https://ipfs.io/ipfs/";
+		return "";
 	}
 
     function mintItem(address to, string memory uri) public returns (uint256) {
@@ -37,4 +37,23 @@ contract myPlanaMarketplace is ERC721 {
     function burn(uint256 id) external {
         _burn(id);
     }
+
+
+
+	function tokenURI(
+		uint256 tokenId
+	) public view override(ERC721, ERC721URIStorage) returns (string memory) {
+		return super.tokenURI(tokenId);
+	}
+
+	function supportsInterface(
+		bytes4 interfaceId
+	)
+		public
+		view
+		override(ERC721, ERC721URIStorage)
+		returns (bool)
+	{
+		return super.supportsInterface(interfaceId);
+	}
 }
